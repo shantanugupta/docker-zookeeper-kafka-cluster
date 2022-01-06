@@ -1,0 +1,18 @@
+#Tutorial: https://sookocheff.com/post/docker/containerizing-zookeeper-a-guided-tour/
+FROM apache-zookeeper
+
+#WORKDIR ${ZOOKEEPER_HOME}
+
+#EXPOSE 2181 2888 3888
+
+#VOLUME ["/opt/zookeeper/conf", "/tmp/zookeeper"]
+
+#ENTRYPOINT ["/opt/zookeeper/bin/zkServer.sh"]
+#CMD ["start-foreground"]
+
+#start docker container
+#docker run -it --name zoo -p 2181:2181 -p 2888:2888 -p 3888:3888 -v /Users/shangupta/IdeaProjects/docker-kafka-setup/conf:/opt/zookeeper/conf running-zoo
+#enter into docker container
+#docker exec -it zoo /bin/bash
+
+#echo stat | nc localhost 2181
