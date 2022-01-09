@@ -1,0 +1,1 @@
+echo $ZOOKEEPER_SERVER_ID > /opt/zookeeper/data/myid
