@@ -3,7 +3,7 @@ FROM openjdk:11.0.11-jre-slim-buster as builder
 
 # Add Dependencies for PySpark
 RUN apt-get update && apt-get install -y curl vim wget software-properties-common \
-    ssh net-tools ca-certificates iputils-ping telnet    
+    ssh net-tools ca-certificates iputils-ping telnet gettext
 
 #RUN update-alternatives --install "/usr/bin/python" "python" "$(which python3)" 1
 
