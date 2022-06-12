@@ -1,2 +1,3 @@
 *.class
 *.log
+k8s*
