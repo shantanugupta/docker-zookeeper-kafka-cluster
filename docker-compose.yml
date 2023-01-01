@@ -108,11 +108,14 @@ services:
       - /etc/timezone:/etc/timezone:ro # set timezone of docker container equal to host timezone
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - 9092:9092
+      - 9392:9092
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper-1:2181,zookeeper-2:2281,zookeeper-3:2381
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-broker-1:9092
+      - KAFKA_LISTENERS=INTERNAL://:9092,DOCKER://:9392
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-broker-1:9092,DOCKER://host.docker.internal:9392
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
     entrypoint:
       #https://stackoverflow.com/questions/39759071/error-while-starting-kafka-broker 
       #Add 20 second delay to avoid this problem that occurs when you start kafka before zookeeper nodes joined each other
@@ -146,7 +149,10 @@ services:
     environment:
       - KAFKA_BROKER_ID=2
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper-1:2181,zookeeper-2:2281,zookeeper-3:2381
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-broker-2:9092
+      - KAFKA_LISTENERS=INTERNAL://:9092,DOCKER://:9192
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-broker-2:9092,DOCKER://host.docker.internal:9192
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
     entrypoint:
       #https://stackoverflow.com/questions/39759071/error-while-starting-kafka-broker 
       #Add 20 second delay to avoid this problem that occurs when you start kafka before zookeeper nodes joined each other
@@ -180,7 +186,10 @@ services:
     environment:
       - KAFKA_BROKER_ID=3
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper-1:2181,zookeeper-2:2281,zookeeper-3:2381
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-broker-3:9092
+      - KAFKA_LISTENERS=INTERNAL://:9092,DOCKER://:9292
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-broker-3:9092,DOCKER://host.docker.internal:9292
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
     entrypoint:
       #https://stackoverflow.com/questions/39759071/error-while-starting-kafka-broker 
       #Add 20 second delay to avoid this problem that occurs when you start kafka before zookeeper nodes joined each other

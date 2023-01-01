@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y curl vim wget software-properties-commo
 # Fix the value of PYTHONHASHSEED
 # Note: this is needed when you use Python 3.3 or greater
 ENV ZOOKEEPER_VERSION=3.8.0 \
-    KAFKA_VERSION=3.2.0 \
+    KAFKA_VERSION=3.2.3 \
     ZOOKEEPER_HOME=/opt/zookeeper \
     KAFKA_HOME=/opt/kafka \
     PYTHONHASHSEED=1
