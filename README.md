@@ -50,3 +50,19 @@ sleep 20 && $kafka_home/custom/kafka_init.sh &&
           $kafka_home/bin/kafka-server-start.sh
           $kafka_home/config/server.properties
 ```
+
+## Some of the commands to test kafka cluster
+Linux Shell
+```
+./kafka-topics.sh --bootstrap-server kafka-broker-1:9092 --create --replication-factor 1 --partitions 1 --topic simpletalk_topic
+./kafka-topics.sh --bootstrap-server kafka-broker-1:9092 --describe
+./kafka-console-producer.sh --bootstrap-server kafka-broker-1:9092 --topic simpletalk_topic
+./kafka-console-consumer.sh --bootstrap-server kafka-broker-1:9092 --topic simpletalk_topic
+```
+Windows Shell
+```
+.\kafka-topics.bat --bootstrap-server localhost:19092 --create --replication-factor 1 --partitions 1 --topic simpletalk_topic
+.\kafka-topics.bat --bootstrap-server localhost:19092 --describe
+.\kafka-console-producer.bat --bootstrap-server localhost:19092 --topic simpletalk_topic
+.\kafka-console-consumer.bat --bootstrap-server localhost:19092 --topic simpletalk_topic
+```
