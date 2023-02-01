@@ -52,6 +52,13 @@ sleep 20 && $kafka_home/custom/kafka_init.sh &&
 ```
 
 ## Some of the commands to test kafka cluster
+To start linux shell
+```
+docker exec -it kafka-broker-1 /bin/bash
+docker exec -it kafka-broker-2 /bin/bash
+docker exec -it kafka-broker-3 /bin/bash
+```
+
 Linux Shell
 ```
 ./kafka-topics.sh --bootstrap-server kafka-broker-1:9092 --create --replication-factor 1 --partitions 1 --topic simpletalk_topic
@@ -60,9 +67,27 @@ Linux Shell
 ./kafka-console-consumer.sh --bootstrap-server kafka-broker-1:9092 --topic simpletalk_topic
 ```
 Windows Shell
+
+### <u>Errors encontered when client is outside docker:</u>
+</br>
+
 ```
 .\kafka-topics.bat --bootstrap-server localhost:19092 --create --replication-factor 1 --partitions 1 --topic simpletalk_topic
+```
+
+> WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:19092) could not be established. Broker may not be available. (org.apache.kafka.clients.NetworkClient)
+
+```
 .\kafka-topics.bat --bootstrap-server localhost:19092 --describe
+```
+
+```
 .\kafka-console-producer.bat --bootstrap-server localhost:19092 --topic simpletalk_topic
+```
+ > WARN [Producer clientId=console-producer] Bootstrap broker localhost:19092 (id: -1 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
+
+```
 .\kafka-console-consumer.bat --bootstrap-server localhost:19092 --topic simpletalk_topic
 ```
+> WARN [Consumer clientId=console-consumer, groupId=console-consumer-7780] Bootstrap broker localhost:19092 (id: -1 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
+
