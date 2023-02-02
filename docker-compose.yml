@@ -27,8 +27,7 @@ services:
       [
         "/bin/bash",
         "-c",
-        "$zookeeper_home/conf/zookeeper_init.sh &&
-          $zookeeper_home/bin/zkServer.sh start-foreground"
+        "$zookeeper_home/conf/zookeeper_init.sh && $zookeeper_home/bin/zkServer.sh start-foreground"
       ]
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
@@ -55,8 +54,7 @@ services:
       [
         "/bin/bash",
         "-c",
-        "$zookeeper_home/conf/zookeeper_init.sh &&
-          $zookeeper_home/bin/zkServer.sh start-foreground"
+        "$zookeeper_home/conf/zookeeper_init.sh && $zookeeper_home/bin/zkServer.sh start-foreground"
       ]
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
@@ -83,8 +81,7 @@ services:
       [
         "/bin/bash",
         "-c",
-        "$zookeeper_home/conf/zookeeper_init.sh &&
-          $zookeeper_home/bin/zkServer.sh start-foreground"
+        "$zookeeper_home/conf/zookeeper_init.sh && $zookeeper_home/bin/zkServer.sh start-foreground"
       ]
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
@@ -108,12 +105,13 @@ services:
       - /etc/timezone:/etc/timezone:ro # set timezone of docker container equal to host timezone
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - 9192:9092
+      - 9092:9092
+      - 19192:19092
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper-1:2181,zookeeper-2:2281,zookeeper-3:2381
-      - KAFKA_LISTENERS=INTERNAL://:9092,DOCKER://:9192
-      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-broker-1:9092,DOCKER://localhost:9192
+      - KAFKA_LISTENERS=INTERNAL://:9092,DOCKER://:19092
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-broker-1:9092,DOCKER://localhost:19192
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
       - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
     entrypoint:
@@ -122,9 +120,7 @@ services:
       [
         "/bin/bash",
         "-c",
-        "sleep 20 && $kafka_home/custom/kafka_init.sh &&
-          $kafka_home/bin/kafka-server-start.sh
-          $kafka_home/config/server.properties"
+        "sleep 20 && $kafka_home/custom/kafka_init.sh && $kafka_home/bin/kafka-server-start.sh $kafka_home/config/server.properties"
       ]
     networks:
       - zookeeper-network
@@ -142,6 +138,7 @@ services:
     working_dir: $kafka_home/bin
     ports:
       - 9292:9092
+      - 19292:19092
     volumes:
       - ./conf:$kafka_home/custom
       - /etc/timezone:/etc/timezone:ro # set timezone of docker container equal to host timezone
@@ -149,8 +146,8 @@ services:
     environment:
       - KAFKA_BROKER_ID=2
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper-1:2181,zookeeper-2:2281,zookeeper-3:2381
-      - KAFKA_LISTENERS=INTERNAL://:9092,DOCKER://:9292
-      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-broker-2:9092,DOCKER://localhost:9292
+      - KAFKA_LISTENERS=INTERNAL://:9092,DOCKER://:19092
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-broker-2:9092,DOCKER://localhost:19292
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
       - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
     entrypoint:
@@ -159,9 +156,7 @@ services:
       [
         "/bin/bash",
         "-c",
-        "sleep 20 && $kafka_home/custom/kafka_init.sh &&
-          $kafka_home/bin/kafka-server-start.sh
-          $kafka_home/config/server.properties"
+        "sleep 20 && $kafka_home/custom/kafka_init.sh && $kafka_home/bin/kafka-server-start.sh $kafka_home/config/server.properties"
       ]
     networks:
       - zookeeper-network
@@ -178,7 +173,8 @@ services:
     container_name: $kafka_broker_3
     working_dir: $kafka_home/bin
     ports:
-      - 9392:9092
+      - 9392:9092 #externalPort:internalPort
+      - 19392:19092 #externalPort:internalPort
     volumes:
       - ./conf:$kafka_home/custom
       - /etc/timezone:/etc/timezone:ro # set timezone of docker container equal to host timezone
@@ -186,8 +182,8 @@ services:
     environment:
       - KAFKA_BROKER_ID=3
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper-1:2181,zookeeper-2:2281,zookeeper-3:2381
-      - KAFKA_LISTENERS=INTERNAL://:9092,DOCKER://:9392
-      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-broker-3:9092,DOCKER://localhost:9392
+      - KAFKA_LISTENERS=INTERNAL://:9092,DOCKER://:19092
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-broker-3:9092,DOCKER://localhost:19392
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
       - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
     entrypoint:
@@ -196,9 +192,7 @@ services:
       [
         "/bin/bash",
         "-c",
-        "sleep 20 && $kafka_home/custom/kafka_init.sh &&
-          $kafka_home/bin/kafka-server-start.sh
-          $kafka_home/config/server.properties"
+        "sleep 20 && $kafka_home/custom/kafka_init.sh && $kafka_home/bin/kafka-server-start.sh $kafka_home/config/server.properties"
       ]
     networks:
       - zookeeper-network

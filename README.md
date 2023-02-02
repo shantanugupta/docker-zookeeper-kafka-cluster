@@ -6,6 +6,10 @@ This project helps setting-up zookeeper 3 node cluster along with kafka 3 node c
 For setting up kafka cluster, prerequisite is to setup zookeeper cluster which will act as a cluster manager for kafka.
 To setup zookeeper, we need to configure environment variables.
 
+To start the cluster run following command
+```
+docker compose up --build
+```
 
 ### Zookeeper Cluster Setup
 
@@ -62,7 +66,7 @@ docker exec -it kafka-broker-3 /bin/bash
 Linux Shell
 ```
 ./kafka-topics.sh --bootstrap-server kafka-broker-1:9092 --create --replication-factor 1 --partitions 1 --topic simpletalk_topic
-./kafka-topics.sh --bootstrap-server kafka-broker-1:9092 --describe
+./kafka-topics.sh --bootstrap-server kafka-broker-1:9092 --describe --topic simpletalk_topic
 ./kafka-console-producer.sh --bootstrap-server kafka-broker-1:9092 --topic simpletalk_topic
 ./kafka-console-consumer.sh --bootstrap-server kafka-broker-1:9092 --topic simpletalk_topic
 ```
@@ -72,22 +76,10 @@ Windows Shell
 </br>
 
 ```
-.\kafka-topics.bat --bootstrap-server localhost:19092 --create --replication-factor 1 --partitions 1 --topic simpletalk_topic
-```
-
-> WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:19092) could not be established. Broker may not be available. (org.apache.kafka.clients.NetworkClient)
-
-```
-.\kafka-topics.bat --bootstrap-server localhost:19092 --describe
-```
-
-```
-.\kafka-console-producer.bat --bootstrap-server localhost:19092 --topic simpletalk_topic
-```
- > WARN [Producer clientId=console-producer] Bootstrap broker localhost:19092 (id: -1 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
-
-```
-.\kafka-console-consumer.bat --bootstrap-server localhost:19092 --topic simpletalk_topic
+.\kafka-topics.bat --bootstrap-server localhost:19392 --create --replication-factor 1 --partitions 1 --topic simpletalk_topic
+.\kafka-topics.bat --bootstrap-server localhost:19392 --describe --topic simpletalk_topic
+.\kafka-console-producer.bat --bootstrap-server kafka-broker-1:19392 --topic simpletalk_topic
+.\kafka-console-consumer.bat --bootstrap-server localhost:19392 --topic simpletalk_topic
 ```
 > WARN [Consumer clientId=console-consumer, groupId=console-consumer-7780] Bootstrap broker localhost:19092 (id: -1 rack: null) disconnected (org.apache.kafka.clients.NetworkClient)
 
